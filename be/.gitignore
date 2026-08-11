@@ -1,0 +1,41 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+/videoteca-api
+/videoteca-api.exe
+/bin/
+/build/
+/dist/
+
+# Go workspace and dependency cache
+go.work
+go.work.sum
+vendor/
+
+# Test and coverage output
+coverage.out
+coverage.html
+*.coverprofile
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo

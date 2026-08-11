@@ -1,0 +1,9 @@
+DROP FUNCTION IF EXISTS ObtenerUltimas10Peliculas();
+DROP TABLE IF EXISTS ratings;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS episodes;
+DROP TABLE IF EXISTS movie_serie_actors;
+DROP TABLE IF EXISTS movie_serie_genres;
+DROP TABLE IF EXISTS actors;
+DROP TABLE IF EXISTS genres;
+DROP TABLE IF EXISTS movie_series;
