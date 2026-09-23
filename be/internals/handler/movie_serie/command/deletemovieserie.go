@@ -16,6 +16,19 @@ func NewDeleteMovieSerieHandler(r storage.MovieSerieRepository) *DeleteMovieSeri
 	return &DeleteMovieSerieHandler{r: r}
 }
 
+// DeleteMovieSerie godoc
+// @Summary		Delete a movie or series (admin)
+// @Description	Deletes a movie/series by ID. Requires role: admin.
+// @Tags			Admin - Movies & Series
+// @Produce		json
+// @Security		BearerAuth
+// @Param			id	path		int	true	"Movie/Series ID"
+// @Success		200	{object}	map[string]interface{}	"movie/serie deleted successfully"
+// @Failure		400	{object}	map[string]interface{}	"Invalid ID"
+// @Failure		401	{object}	map[string]interface{}	"Missing or invalid JWT"
+// @Failure		403	{object}	map[string]interface{}	"Admin role required"
+// @Failure		500	{object}	map[string]interface{}	"Failed to delete movie/serie"
+// @Router			/admin/movieseries/{id} [delete]
 func (h *DeleteMovieSerieHandler) Handle(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)

@@ -20,6 +20,21 @@ type UpdateAdminPasswordRequest struct {
 	NewPassword string `json:"newPassword" binding:"required,min=6"`
 }
 
+// UpdateAdminPassword godoc
+// @Summary		Reset an admin's password (superadmin)
+// @Description	Sets a new password for the user identified by userId. Requires role: superadmin.
+// @Tags			Superadmin
+// @Accept			json
+// @Produce		json
+// @Security		BearerAuth
+// @Param			request	body		UpdateAdminPasswordRequest	true	"User ID and new password (min 6 chars)"
+// @Success		200		{object}	map[string]interface{}		"password updated successfully"
+// @Failure		400		{object}	map[string]interface{}		"Valid userId and password are required"
+// @Failure		401		{object}	map[string]interface{}		"Missing or invalid JWT"
+// @Failure		403		{object}	map[string]interface{}		"Superadmin role required"
+// @Failure		404		{object}	map[string]interface{}		"User not found"
+// @Failure		500		{object}	map[string]interface{}		"Failed to update password"
+// @Router			/superadmin/admins/password [put]
 func (h *UpdateAdminPasswordHandler) Handle(c *gin.Context) {
 	var req UpdateAdminPasswordRequest
 	if err := c.ShouldBindJSON(&req); err != nil {

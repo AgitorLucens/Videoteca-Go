@@ -20,6 +20,20 @@ type updateEmailRequest struct {
 	Email string `json:"email" binding:"required,email"`
 }
 
+// UpdateEmail godoc
+// @Summary		Update the authenticated user's email
+// @Description	Changes the email of the currently authenticated user.
+// @Tags			User Profile
+// @Accept			json
+// @Produce		json
+// @Security		BearerAuth
+// @Param			request	body		updateEmailRequest		true	"New email"
+// @Success		200		{object}	map[string]interface{}	"email updated"
+// @Failure		400		{object}	map[string]interface{}	"Invalid user ID or email"
+// @Failure		401		{object}	map[string]interface{}	"Missing or invalid JWT"
+// @Failure		404		{object}	map[string]interface{}	"User not found"
+// @Failure		500		{object}	map[string]interface{}	"Failed to update email"
+// @Router			/user/email [put]
 func (h *UpdateEmailHandler) Handle(c *gin.Context) {
 	userIDStr, _ := c.Get("userID")
 	userID, err := strconv.Atoi(userIDStr.(string))

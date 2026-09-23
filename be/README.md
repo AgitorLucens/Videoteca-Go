@@ -11,6 +11,7 @@ Go API for the Videoteca application. It provides authentication, role-based aut
 - JWT for authenticated routes
 - bcrypt for password hashing
 - Prometheus and Grafana for monitoring
+- swaggo/swag v2 for OpenAPI 3.1 documentation
 
 ## Setup
 
@@ -83,6 +84,34 @@ go test ./...
 | Admin | `/admin/movieseries`, `/admin/genres`, `/admin/actors` |
 | Superadmin | `/superadmin/admins`, `/superadmin/admins/password` |
 | Metrics | `GET /metrics` |
+| Docs | `GET /swagger/index.html`, `GET /openapi.json` |
+
+## API Documentation (Swagger / OpenAPI 3.1)
+
+Interactive docs are generated with [swag](https://github.com/swaggo/swag) v2 from Go annotations on the handlers and served publicly at:
+
+```text
+http://localhost:8080/swagger/index.html
+```
+
+The raw OpenAPI 3.1 spec is served at:
+
+```text
+http://localhost:8080/openapi.json
+```
+
+The Swagger UI loads the spec from `/openapi.json` instead of the usual `/swagger/doc.json`, because the spec is registered by swag v2 while the gin-swagger UI helper reads from the swag v1 registry.
+
+Protected endpoints accept the `BearerAuth` scheme (`Authorization: Bearer <token>`): call `POST /login` for a token, then use the **Authorize** button in the UI.
+
+After changing annotations in handlers or `cmd/main.go`, regenerate the spec with:
+
+```sh
+go install github.com/swaggo/swag/v2/cmd/swag@latest
+swag init -g cmd/main.go -d ./ --v3.1
+```
+
+The generated files live in `docs/` (`docs.go`, `swagger.json`, `swagger.yaml`) and are committed to the repo.
 
 ## Authorization
 
@@ -148,13 +177,14 @@ Prometheus scrapes `host.docker.internal:8080/metrics` every 15 seconds, so keep
 ## Useful Paths
 
 ```text
-cmd/main.go                         # Application entry point
-internals/api/api.go                # Route registration
+cmd/main.go                         # Application entry point (general API annotations)
+internals/api/api.go                # Route registration + Swagger UI route
+internals/handler/                  # HTTP handlers grouped by feature (per-endpoint annotations)
 internals/middleware/               # JWT, RBAC, CORS, Prometheus middleware
-internals/handler/                  # HTTP handlers grouped by feature
 internals/storage/                  # Catalog persistence
 internals/rbac/                     # RBAC persistence
 internals/migration/migrate.go      # Migration runner
+docs/                               # Generated OpenAPI 3.1 spec (swag init --v3.1)
 migrations/                         # SQL migrations
 docker/                             # Prometheus and Grafana provisioning
 ```
