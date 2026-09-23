@@ -22,6 +22,19 @@ type updatePhotoRequest struct {
 	Photo string `json:"photo" binding:"required"`
 }
 
+// UpdatePhoto godoc
+// @Summary		Update the authenticated user's profile picture
+// @Description	Uploads a new profile picture as a base64-encoded image (optionally with a data-URI prefix).
+// @Tags			User Profile
+// @Accept			json
+// @Produce		json
+// @Security		BearerAuth
+// @Param			request	body		updatePhotoRequest		true	"Base64 image data"
+// @Success		200		{object}	map[string]interface{}	"photo updated"
+// @Failure		400		{object}	map[string]interface{}	"Invalid user ID or image data"
+// @Failure		401		{object}	map[string]interface{}	"Missing or invalid JWT"
+// @Failure		500		{object}	map[string]interface{}	"Failed to update photo"
+// @Router			/user/picture [put]
 func (h *UpdatePhotoHandler) Handle(c *gin.Context) {
 	userIDStr, _ := c.Get("userID")
 	userID, err := strconv.Atoi(userIDStr.(string))

@@ -17,6 +17,17 @@ func NewGetProfileHandler(repo *rbac.Repository) *GetProfileHandler {
 	return &GetProfileHandler{repo: repo}
 }
 
+// GetProfile godoc
+// @Summary		Get current user's profile
+// @Description	Returns the profile of the authenticated user, including a base64 data-URI profile picture when set.
+// @Tags			User Profile
+// @Produce		json
+// @Security		BearerAuth
+// @Success		200	{object}	map[string]interface{}	"id, username, email, name, profile_picture"
+// @Failure		400	{object}	map[string]interface{}	"Invalid user ID"
+// @Failure		401	{object}	map[string]interface{}	"Missing or invalid JWT"
+// @Failure		404	{object}	map[string]interface{}	"User not found"
+// @Router			/user/profile [get]
 func (h *GetProfileHandler) Handle(c *gin.Context) {
 	userIDStr, _ := c.Get("userID")
 	userID, err := strconv.Atoi(userIDStr.(string))

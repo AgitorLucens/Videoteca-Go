@@ -20,6 +20,20 @@ type createCommentRequest struct {
 	Comment string `json:"comment" binding:"required"`
 }
 
+// CreateComment godoc
+// @Summary		Add a comment to a movie/series
+// @Description	Creates a comment on behalf of the authenticated user. Available to roles: user, admin.
+// @Tags			Comments
+// @Accept			json
+// @Produce		json
+// @Security		BearerAuth
+// @Param			id		path		int						true	"Movie/Series ID"
+// @Param			request	body		createCommentRequest	true	"Comment text"
+// @Success		201		{object}	map[string]interface{}	"comment created"
+// @Failure		400		{object}	map[string]interface{}	"Invalid ID or missing comment"
+// @Failure		401		{object}	map[string]interface{}	"Missing or invalid JWT"
+// @Failure		500		{object}	map[string]interface{}	"Failed to create comment"
+// @Router			/movieseries/{id}/comments [post]
 func (h *CreateCommentHandler) Handle(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)

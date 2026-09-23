@@ -20,6 +20,18 @@ type ResetPasswordRequest struct {
 	NewPassword string `json:"newPassword" binding:"required,min=6"`
 }
 
+// ResetPassword godoc
+// @Summary		Reset a user's password
+// @Description	Sets a new password for the account identified by email.
+// @Tags			Auth
+// @Accept			json
+// @Produce		json
+// @Param			request	body		ResetPasswordRequest	true	"Email and new password"
+// @Success		200		{object}	map[string]interface{}	"password reset successfully"
+// @Failure		400		{object}	map[string]interface{}	"Valid email and password (min 6 chars) are required"
+// @Failure		404		{object}	map[string]interface{}	"No account found with that email"
+// @Failure		500		{object}	map[string]interface{}	"Failed to reset password"
+// @Router			/reset-password [post]
 func (h *ResetPasswordHandler) Handle(c *gin.Context) {
 	var req ResetPasswordRequest
 	if err := c.ShouldBindJSON(&req); err != nil {

@@ -16,6 +16,20 @@ func NewGetCommentsForMovieHandler(r storage.MovieSerieRepository) *GetCommentsF
 	return &GetCommentsForMovieHandler{r: r}
 }
 
+// GetCommentsForMovie godoc
+// @Summary		List comments for a movie/series
+// @Description	Returns a paginated list of comments for the given movie/series. Available to roles: user, admin.
+// @Tags			Comments
+// @Produce		json
+// @Security		BearerAuth
+// @Param			id		path		int		true	"Movie/Series ID"
+// @Param			page	query		int		false	"Page number"	default(1)
+// @Param			limit	query		int		false	"Items per page (max 50)"	default(10)
+// @Success		200		{object}	map[string]interface{}	"comments, total, page, limit, totalPages"
+// @Failure		400		{object}	map[string]interface{}	"Invalid ID"
+// @Failure		401		{object}	map[string]interface{}	"Missing or invalid JWT"
+// @Failure		500		{object}	map[string]interface{}	"Failed to fetch comments"
+// @Router			/movieseries/{id}/comments [get]
 func (h *GetCommentsForMovieHandler) Handle(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)

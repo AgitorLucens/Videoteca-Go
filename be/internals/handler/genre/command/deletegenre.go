@@ -16,6 +16,19 @@ func NewDeleteGenreHandler(r storage.GenreRepository) *DeleteGenreHandler {
 	return &DeleteGenreHandler{r: r}
 }
 
+// DeleteGenre godoc
+// @Summary		Delete a genre (admin)
+// @Description	Deletes a genre by ID. Requires role: admin.
+// @Tags			Admin - Genres
+// @Produce		json
+// @Security		BearerAuth
+// @Param			id	path		int	true	"Genre ID"
+// @Success		200	{object}	map[string]interface{}	"genre deleted successfully"
+// @Failure		400	{object}	map[string]interface{}	"Invalid ID"
+// @Failure		401	{object}	map[string]interface{}	"Missing or invalid JWT"
+// @Failure		403	{object}	map[string]interface{}	"Admin role required"
+// @Failure		500	{object}	map[string]interface{}	"Failed to delete genre"
+// @Router			/admin/genres/{id} [delete]
 func (h *DeleteGenreHandler) Handle(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)

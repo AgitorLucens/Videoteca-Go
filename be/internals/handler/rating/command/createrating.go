@@ -20,6 +20,20 @@ type createRatingRequest struct {
 	Rating int `json:"rating" binding:"required"`
 }
 
+// RateMovieSerie godoc
+// @Summary		Rate a movie or series
+// @Description	Creates or updates the authenticated user's rating (1-5) for a movie/series and returns updated aggregate rating data. Available to roles: user, admin.
+// @Tags			Ratings
+// @Accept			json
+// @Produce		json
+// @Security		BearerAuth
+// @Param			id		path		int						true	"Movie/Series ID"
+// @Param			request	body		createRatingRequest		true	"Rating value (1-5)"
+// @Success		200		{object}	map[string]interface{}	"ratingData"
+// @Failure		400		{object}	map[string]interface{}	"Invalid ID or rating out of range"
+// @Failure		401		{object}	map[string]interface{}	"Missing or invalid JWT"
+// @Failure		500		{object}	map[string]interface{}	"Failed to save or fetch rating"
+// @Router			/movieseries/{id}/rate [post]
 func (h *CreateRatingHandler) Handle(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)

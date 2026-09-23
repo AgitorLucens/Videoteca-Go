@@ -18,6 +18,17 @@ func NewPostUserHandler(r *rbac.Repository) *PostUserHandler{
 	}
 }
 
+// RegisterUser godoc
+// @Summary		Register a new user
+// @Description	Public registration endpoint. Creates a user with the given role.
+// @Tags			Users
+// @Accept			json
+// @Produce		json
+// @Param			request	body		rbac.CreateUserRequest	true	"User registration data"
+// @Success		201		{object}	map[string]interface{}	"msg and user"
+// @Failure		400		{object}	map[string]interface{}	"Invalid request payload"
+// @Failure		500		{object}	map[string]interface{}	"Failed to create user"
+// @Router			/users [post]
 func (h *PostUserHandler) Handle(c *gin.Context){
 	var req rbac.CreateUserRequest
 	if err := c.ShouldBindJSON(&req); err != nil {

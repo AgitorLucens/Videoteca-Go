@@ -10,6 +10,25 @@ import (
 	"syscall"
 )
 
+// @title						Videoteca API
+// @version					1.0
+// @description				REST API for the Videoteca app: movies/series catalog, comments, ratings, user profiles and admin management.
+// @description				Most endpoints require a JWT in the `Authorization: Bearer <token>` header (obtain it via POST /login).
+// @termsOfService			http://swagger.io/terms/
+//
+// @contact.name				Videoteca API Support
+// @contact.url				https://github.com/videoteca
+//
+// @license.name				MIT
+//
+// @servers.url				http://localhost:8080
+// @servers.description		Local development server
+//
+// @securitydefinitions.bearerauth	BearerAuth
+// @in							header
+// @name						Authorization
+// @description					Type "Bearer " followed by a space and a JWT token returned by POST /login: `Bearer <token>`
+
 func main() {
 
 	// Se crea contexto que escucha señal de interrupcion

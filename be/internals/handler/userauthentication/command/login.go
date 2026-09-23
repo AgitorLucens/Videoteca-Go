@@ -21,6 +21,18 @@ func NewLoginHandler(r *rbac.Repository) *LoginHandler {
 	}
 }
 
+// Login godoc
+// @Summary		Log in a user
+// @Description	Authenticates a user with username and password, and returns a JWT valid for 1 hour.
+// @Tags			Auth
+// @Accept			json
+// @Produce		json
+// @Param			credentials	body		rbac.LoginRequest	true	"Login credentials"
+// @Success		200			{object}	map[string]interface{}	"token and message"
+// @Failure		400			{object}	map[string]interface{}	"Invalid request payload"
+// @Failure		401			{object}	map[string]interface{}	"Invalid credentials"
+// @Failure		500			{object}	map[string]interface{}	"Could not create token"
+// @Router			/login [post]
 func (h *LoginHandler) Handle(c *gin.Context) {
 	var req rbac.LoginRequest
 	if err := c.ShouldBindJSON(&req); err != nil {

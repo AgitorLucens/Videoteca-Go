@@ -16,6 +16,19 @@ func NewDeleteActorHandler(r storage.ActorRepository) *DeleteActorHandler {
 	return &DeleteActorHandler{r: r}
 }
 
+// DeleteActor godoc
+// @Summary		Delete an actor (admin)
+// @Description	Deletes an actor by ID. Requires role: admin.
+// @Tags			Admin - Actors
+// @Produce		json
+// @Security		BearerAuth
+// @Param			id	path		int	true	"Actor ID"
+// @Success		200	{object}	map[string]interface{}	"actor deleted successfully"
+// @Failure		400	{object}	map[string]interface{}	"Invalid ID"
+// @Failure		401	{object}	map[string]interface{}	"Missing or invalid JWT"
+// @Failure		403	{object}	map[string]interface{}	"Admin role required"
+// @Failure		500	{object}	map[string]interface{}	"Failed to delete actor"
+// @Router			/admin/actors/{id} [delete]
 func (h *DeleteActorHandler) Handle(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)

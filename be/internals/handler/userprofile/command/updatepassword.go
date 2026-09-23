@@ -21,6 +21,19 @@ type updatePasswordRequest struct {
 	NewPassword     string `json:"newPassword" binding:"required,min=8"`
 }
 
+// UpdatePassword godoc
+// @Summary		Update the authenticated user's password
+// @Description	Changes the password of the currently authenticated user; the current password must match.
+// @Tags			User Profile
+// @Accept			json
+// @Produce		json
+// @Security		BearerAuth
+// @Param			request	body		updatePasswordRequest	true	"Current and new password"
+// @Success		200		{object}	map[string]interface{}	"password updated"
+// @Failure		400		{object}	map[string]interface{}	"Invalid payload or current password incorrect"
+// @Failure		401		{object}	map[string]interface{}	"Missing or invalid JWT"
+// @Failure		500		{object}	map[string]interface{}	"Failed to update password"
+// @Router			/user/password [put]
 func (h *UpdatePasswordHandler) Handle(c *gin.Context) {
 	userIDStr, _ := c.Get("userID")
 	userID, err := strconv.Atoi(userIDStr.(string))

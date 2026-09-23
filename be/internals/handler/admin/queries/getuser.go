@@ -17,6 +17,15 @@ func NewGetUserHandler(r *rbac.Repository) *GetUserHandler{
 	}
 }
 
+// GetUser godoc
+// @Summary		Get a user by ID
+// @Description	Returns the user with the given numeric ID.
+// @Tags			Users
+// @Produce		json
+// @Param			id	path		int	true	"User ID"
+// @Success		200	{object}	rbac.User
+// @Failure		400	{object}	map[string]interface{}	"Invalid ID or user not found"
+// @Router			/users/{id} [get]
 func (h *GetUserHandler) Handle(c *gin.Context){
 	idStr := c.Param("id")
 	id, err  := strconv.Atoi(idStr)
